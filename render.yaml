@@ -3,9 +3,8 @@ services:
     name: samsung-ar-preview
     runtime: node
     plan: free
-    rootDir: server
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
     envVars:
       - key: NODE_VERSION
         value: 20
