@@ -12,7 +12,7 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 }
 });
 
-const PUBLIC_DIR = path.join(__dirname, '..', 'public');
+const PUBLIC_DIR = path.join(__dirname, 'public');
 const PRODUCTS_DIR = path.join(PUBLIC_DIR, 'products');
 
 app.use(express.static(PUBLIC_DIR));
