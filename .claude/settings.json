@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npm run *)",
+      "Bash(npm start)",
+      "Bash(npm test)",
+      "Bash(npm test:*)",
+      "Bash(node *)",
+      "Bash(npx *)",
+      "Bash(mkdir *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Read(*)",
+      "Edit(*)",
+      "Write(*)",
+      "Glob(*)",
+      "Grep(*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push *)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)",
+      "Bash(curl *://*)",
+      "Bash(wget *)"
+    ]
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": "3000"
+  }
+}

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#eef1f6" />
+  <title>Samsung Home Preview · 우리집에 놓아보기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="#top" aria-label="Samsung">
+        <span class="brand__logo">SAMSUNG</span>
+        <span class="brand__sub">Home Preview</span>
+      </a>
+      <nav class="topnav" aria-label="주요">
+        <a href="#preview">시뮬레이션</a>
+        <a href="#guide">설치 가이드</a>
+        <a href="#products">제품</a>
+      </nav>
+      <button class="btn btn--ghost" id="navCta">매장 예약</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <span class="eyebrow">AR Home Preview</span>
+          <h1 class="hero__title">우리집에 놓으면,<br/><em>어떤 모습일까?</em></h1>
+          <p class="hero__lead">
+            스마트폰 카메라로 공간을 비추기만 하면 BESPOKE·Neo QLED·세탁기가
+            <b>실제 크기</b>로 합성됩니다. 설치 시 필요한 이격 공간과 전원·배관까지
+            한 번에 확인하세요.
+          </p>
+          <div class="hero__cta">
+            <a href="#preview" class="btn btn--primary">지금 시뮬레이션</a>
+            <a href="#guide" class="btn btn--soft">설치 가이드 보기</a>
+          </div>
+          <ul class="hero__chips">
+            <li>📷 카메라 촬영</li>
+            <li>🪞 실측 합성</li>
+            <li>📐 이격 거리 안내</li>
+            <li>🔌 전원·배관 체크</li>
+          </ul>
+        </div>
+
+        <!-- Hero preview card (the feature itself, visible in hero) -->
+        <div class="hero__device neu-card">
+          <div class="phone">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="phone__viewfinder" id="heroViewfinder">
+                <div class="vf-grid"></div>
+                <div class="vf-product" aria-hidden="true">
+                  <div class="vf-product__box"></div>
+                  <div class="vf-product__label">BESPOKE · 912 × 1853 mm</div>
+                </div>
+                <div class="vf-clearance vf-clearance--top">+50mm</div>
+                <div class="vf-clearance vf-clearance--side">+25mm</div>
+              </div>
+              <div class="phone__hud">
+                <span class="dot dot--live"></span> LIVE PREVIEW
+                <span class="hud-right">AR · 1:1 Scale</span>
+              </div>
+            </div>
+            <div class="phone__home"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preview Simulator -->
+    <section id="preview" class="section">
+      <div class="container">
+        <header class="section__head">
+          <h2>3단계로 끝나는 시뮬레이션</h2>
+          <p>촬영 → 제품 선택 → 합성. 모바일에서 바로 동작합니다.</p>
+        </header>
+
+        <div class="sim-grid">
+          <!-- Step 1: Capture -->
+          <div class="neu-card sim-card">
+            <div class="sim-card__num">1</div>
+            <h3>공간 촬영</h3>
+            <p class="muted">설치하려는 벽면을 정면으로 담아주세요.</p>
+
+            <div class="capture" id="captureBox">
+              <video id="cam" autoplay playsinline muted hidden></video>
+              <img id="snapshot" alt="촬영 미리보기" hidden />
+              <div class="capture__empty" id="captureEmpty">
+                <span>📷</span>
+                <p>카메라를 시작하거나<br/>사진을 업로드하세요</p>
+              </div>
+
+              <!-- Alignment guide overlay (visible during camera use) -->
+              <div class="guide" id="guide" hidden>
+                <div class="guide__frame" id="guideFrame" style="aspect-ratio: 912 / 1853;">
+                  <span class="guide__corner guide__corner--tl"></span>
+                  <span class="guide__corner guide__corner--tr"></span>
+                  <span class="guide__corner guide__corner--bl"></span>
+                  <span class="guide__corner guide__corner--br"></span>
+
+                  <span class="guide__dim guide__dim--w" id="dimW">912 mm</span>
+                  <span class="guide__dim guide__dim--h" id="dimH">1853 mm</span>
+                  <span class="guide__dim guide__dim--d" id="dimD">D 716 mm</span>
+
+                  <span class="guide__floor">바닥선</span>
+                </div>
+                <p class="guide__tip">
+                  벽·바닥 코너를 <b>가이드 안</b>에 맞춘 뒤 촬영하세요.
+                  제품 실제 치수에 비례하여 합성됩니다.
+                </p>
+              </div>
+            </div>
+
+            <div class="sim-card__actions">
+              <button class="btn btn--soft" id="btnStartCam">카메라 시작</button>
+              <button class="btn btn--soft" id="btnSnap" disabled>촬영</button>
+              <label class="btn btn--ghost">
+                업로드
+                <input type="file" id="fileInput" accept="image/*" capture="environment" hidden />
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 2: Product -->
+          <div class="neu-card sim-card">
+            <div class="sim-card__num">2</div>
+            <h3>제품 선택</h3>
+            <p class="muted">실제 치수 기준으로 합성됩니다.</p>
+
+            <ul class="product-list" id="productList" aria-label="제품 목록"></ul>
+
+            <div class="slider-row">
+              <label for="scale">크기 보정</label>
+              <input type="range" id="scale" min="0.2" max="0.9" step="0.01" value="0.45" />
+            </div>
+          </div>
+
+          <!-- Step 3: Compose -->
+          <div class="neu-card sim-card sim-card--wide">
+            <div class="sim-card__num">3</div>
+            <h3>합성 결과</h3>
+            <p class="muted">결과 이미지를 길게 눌러 저장하거나 공유하세요.</p>
+
+            <div class="result" id="resultBox">
+              <img id="resultImg" alt="합성 결과" hidden />
+              <div class="result__empty" id="resultEmpty">
+                <span>🪄</span>
+                <p>위 단계를 완료하면 결과가 여기에 표시됩니다</p>
+              </div>
+              <div class="result__loading" id="resultLoading" hidden>
+                <div class="spinner"></div><span>합성 중…</span>
+              </div>
+            </div>
+
+            <div class="sim-card__actions">
+              <button class="btn btn--primary" id="btnCompose" disabled>합성하기</button>
+              <a class="btn btn--soft" id="btnDownload" download="samsung-preview.jpg" hidden>이미지 저장</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Install Guide -->
+    <section id="guide" class="section section--alt">
+      <div class="container">
+        <header class="section__head">
+          <h2>설치 전 꼭 확인하세요</h2>
+          <p>선택한 제품의 필요 공간·전원·배관 정보를 자동으로 안내합니다.</p>
+        </header>
+
+        <div class="guide-grid">
+          <article class="neu-card guide-card">
+            <h3 id="g-dim">치수 & 이격</h3>
+            <dl id="dimList" class="kv">
+              <dt>너비</dt><dd id="kvW">—</dd>
+              <dt>높이</dt><dd id="kvH">—</dd>
+              <dt>깊이</dt><dd id="kvD">—</dd>
+              <dt>상단 이격</dt><dd id="kvCT">—</dd>
+              <dt>측면 이격</dt><dd id="kvCS">—</dd>
+              <dt>후면 이격</dt><dd id="kvCB">—</dd>
+            </dl>
+          </article>
+          <article class="neu-card guide-card">
+            <h3>전원 & 배관</h3>
+            <p id="powerNote" class="muted">제품을 선택하면 표시됩니다.</p>
+            <ul class="checklist">
+              <li>전용 접지 콘센트 위치 확인</li>
+              <li>도어 여닫이 방향 및 동선 확보</li>
+              <li>방수팬·급배수 위치 (세탁기/식세기)</li>
+            </ul>
+          </article>
+          <article class="neu-card guide-card">
+            <h3>설치 지원</h3>
+            <p class="muted">삼성 케어플러스 설치기사와 사전 점검 예약</p>
+            <button class="btn btn--primary full">방문 일정 예약</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="section">
+      <div class="container">
+        <header class="section__head">
+          <h2>인기 BESPOKE 라인업</h2>
+          <p>시뮬레이션 가능한 제품을 확인하세요.</p>
+        </header>
+        <div class="prod-grid" id="prodGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© Samsung Home Preview · Demo</span>
+      <span>본 페이지는 데모이며 실제 설치는 매장 상담을 통해 진행됩니다.</span>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
